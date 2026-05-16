@@ -1,0 +1,7 @@
+{
+    "model_type": "XGBClassifier",
+    "roc_auc": 0.9351680194315191,
+    "optimal_threshold": 0.3,
+    "created_for": "Bank Marketing Subscription Prediction",
+    "framework": "XGBoost + Scikit-learn"
+}
