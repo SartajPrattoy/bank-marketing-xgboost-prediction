@@ -1,0 +1,8 @@
+                precision    recall  f1-score   support
+
+Not Subscribed       0.65      0.47      0.54      1058
+    Subscribed       0.93      0.97      0.95      7985
+
+      accuracy                           0.91      9043
+     macro avg       0.79      0.72      0.75      9043
+  weighted avg       0.90      0.91      0.90      9043
