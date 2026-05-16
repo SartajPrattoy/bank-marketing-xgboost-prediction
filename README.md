@@ -1,20 +1,120 @@
 # Customer Subscription Prediction using XGBoost
 
-An end-to-end machine learning project focused on predicting customer term-deposit subscriptions using the UCI Bank Marketing dataset.
+Predicts customer term-deposit subscriptions from the UCI Bank Marketing dataset. Demonstrates production-grade ML architecture with modular, reusable components and business-aware optimization.
+
+## System Architecture
+
+The project uses a modular design with six specialized components:
+
+```
+Data Pipeline → Feature Engineering → Model Training → Evaluation → Business Analysis
+     ↓               ↓                      ↓               ↓              ↓
+data_preprocessing  feature_engineering   model_training  evaluation   business_metrics
+     ↓               ↓                      ↓               ↓              ↓
+  + Visualization layer (all modules)
+```
+
+### Module Structure
+
+**`src/data_preprocessing.py`**
+- Loads UCI Bank Marketing dataset from OpenML
+- Handles missing values (median for numeric, mode for categorical)
+- One-hot encoding for categorical variables
+- Stratified train-test splitting
+- Feature scaling with StandardScaler
+
+**`src/feature_engineering.py`**
+- Creates engineered features:
+  - `contacted_before`: Binary flag for previous campaign contact
+  - `contact_intensity`: Ratio of current to previous contacts
+
+**`src/model_training.py`**
+- XGBoost classifier with early stopping
+- Hyperparameter management
+- Prediction and probability generation
+- Feature importance extraction
+
+**`src/evaluation.py`**
+- Standard classification metrics (accuracy, precision, recall, F1, AUC-ROC)
+- Confusion matrix analysis
+- ROC curve generation
+- Threshold sensitivity analysis across decision boundaries
+
+**`src/business_metrics.py`**
+- Calculates marketing campaign costs (£/call)
+- Revenue from subscriptions (£/conversion)
+- Net profit optimization across thresholds
+- Return on investment (ROI) analysis
+- Identifies optimal threshold maximizing business value
+
+**`src/visualization.py`**
+- Class distribution analysis
+- Training progress monitoring
+- Confusion matrices and ROC curves
+- Feature importance plots
+- Business impact across thresholds
+
+## Automation & Workflow
+
+The modular design enables automated workflows:
+
+```python
+from src import *
+from src.business_metrics import find_optimal_threshold
+
+# Preprocessing pipeline
+df = load_and_prepare_data()
+numeric_cols, categorical_cols = get_column_types(df)
+df = handle_missing_values(df, numeric_cols, categorical_cols)
+df_encoded = encode_categorical_features(df, categorical_cols)
+df_encoded = create_features(df_encoded)
+
+# Train-evaluate-optimize pipeline
+X_train, X_test, y_train, y_test = split_data(X, y)
+X_train_final, X_test_final, _ = scale_features(X_train, X_test, numeric_cols)
+model = train_xgboost_model(X_train_final, y_train, X_test_final, y_test)
+
+# Business optimization
+y_probs = predict_probabilities(model, X_test_final)
+optimal = find_optimal_threshold(y_test, y_probs)
+print(f"Optimal threshold: {optimal['optimal_threshold']}")
+print(f"Expected profit: £{optimal['metrics']['profit']:,.0f}")
+```
+
+Each module is independently composable, enabling:
+- Reuse in different projects
+- Unit testing of individual components
+- Parameter customization
+- Integration with production systems
+
+## Architecture Principles
+
+**Separation of Concerns**
+Each module handles a single responsibility, making code maintainable and testable.
+
+**Reusability**
+Functions are parameterized with sensible defaults, supporting both notebook exploration and production deployments.
+
+**Composability**
+Modules chain together—output from one becomes input to the next, enabling flexible pipelines.
+
+**Business Awareness**
+The business_metrics module connects predictions to actual business value (profit, ROI), not just model accuracy.
 
 ## Features
 
-- Feature Engineering
+- Feature Engineering (automated + manual)
 - XGBoost Classification
-- Threshold Optimization
+- Threshold Optimization (business-driven)
 - SHAP Explainability
 - Business Profit Analysis
+- Modular, reusable components
 
 ## Tech Stack
 
-- Python
+- Python 3.8+
 - Scikit-learn
 - XGBoost
-- Pandas
+- Pandas / NumPy
 - SHAP
-- Matplotlib
+- Matplotlib / Seaborn
