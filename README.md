@@ -111,18 +111,39 @@ All analysis artifacts are generated in `outputs/` and organized by type:
 
 ### Visualizations (`outputs/figures/`)
 
-Plots saved at 300 DPI:
+Plots saved at 300 DPI.
 
-| File | Description |
-|------|-------------|
-| `class_distribution.png` | Target variable imbalance (11.7% subscribed) |
-| `subscription_by_job.png` | Subscription rates across customer job types |
-| `training_history.png` | XGBoost AUC progression during training |
-| `confusion_matrix.png` | Model prediction accuracy breakdown |
-| `roc_curve.png` | ROC curve showing model discrimination (AUC: 0.7741) |
-| `threshold_profit_curve.png` | Estimated profit across classification thresholds |
-| `shap_summary_bar.png` | Global feature importance via SHAP |
-| `shap_beeswarm.png` | SHAP beeswarm plot (feature impact direction) |
+**Class distribution** (11.7% subscribed)
+
+<img src="outputs/figures/class_distribution.png" width="500">
+
+**Subscription rate by job type**
+
+<img src="outputs/figures/subscription_by_job.png" width="500">
+
+**XGBoost training history** (AUC during training)
+
+<img src="outputs/figures/training_history.png" width="500">
+
+**Confusion matrix**
+
+<img src="outputs/figures/confusion_matrix.png" width="500">
+
+**ROC curve** (AUC: 0.7741)
+
+<img src="outputs/figures/roc_curve.png" width="500">
+
+**Estimated profit across thresholds**
+
+<img src="outputs/figures/threshold_profit_curve.png" width="500">
+
+**SHAP global feature importance**
+
+<img src="outputs/figures/shap_summary_bar.png" width="500">
+
+**SHAP beeswarm** (feature impact direction)
+
+<img src="outputs/figures/shap_beeswarm.png" width="500">
 
 ### Reports (`outputs/reports/`)
 
